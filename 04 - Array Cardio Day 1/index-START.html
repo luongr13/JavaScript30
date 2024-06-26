@@ -38,28 +38,71 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let early_inventors = inventors.filter((person) => (person.year >= 1500) && (person.year < 1600));
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    let id = inventors.map((person) => {
+      let object = {
+        first: person.first,
+        last: person.last,
+      }
+      return object;
+    });
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    inventors.sort((a, b) => {
+      if (a.year > b.year) {
+        return -1;
+      } else if (b.year > a.year) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const sum = inventors.reduce((total, object) => { return total + object.year; }, 0);
 
     // 5. Sort the inventors by years lived
+    inventors.sort((a, b) => {
+      const lifespan_a = a.passed - a.year;
+      const lifespan_b = b.passed - b.year;
+
+      if (lifespan_a > lifespan_b) {
+        return -1;
+      } else if (lifespan_a < lifespan_b) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    links = document.querySelectorAll(".mw-category-group a");
+    links = [...links];
+    de = links
+    .map(link => link.innerText)
+    .filter(link => link.includes('de'));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    people.sort();
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    let frequency_map = data.reduce((obj, element) => {
+      if (!obj[element]) obj[element] = 0;
+      obj[element]++;
+      return obj;
+    }, {});
+
+    console.table(frequency_map);
 
   </script>
 </body>
